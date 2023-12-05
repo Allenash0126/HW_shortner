@@ -1,3 +1,8 @@
-const testConnect = document.querySelector('#test')
+const urlInput = document.querySelector('#url-input')
+const urlForm = document.querySelector('#url-form')
 
-testConnect.innerHTML = `Let's change the World!`
+urlForm.addEventListener('submit', function onURLSubmitted(event) {
+  const urlOriginal = urlInput.value
+  event.preventDefault()
+  console.log(urlOriginal)
+})
