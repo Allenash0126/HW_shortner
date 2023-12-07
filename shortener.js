@@ -1,6 +1,3 @@
-// const urlInput = document.querySelector('#url-input')
-// const urlForm = document.querySelector('#url-form')
-
 const express = require('express')
 const { engine } = require('express-handlebars') 
 const app = express()
@@ -26,7 +23,8 @@ app.get('/',(req,res) => {
 })
 
 app.get('/URLs', (req, res) => {
-  // res.send('It is Homepage.')
+  let keywords = req.query.originalURL
+  console.log(keywords)
   res.render('index')
 })
 
@@ -39,8 +37,4 @@ app.listen(port,() => {
   console.log(`express server is running on http://localhost:${port}`)
 })
 
-// urlForm.addEventListener('submit', function onURLSubmitted(event) {
-//   const urlOriginal = urlInput.value
-//   event.preventDefault()
-//   console.log(urlOriginal)
-// })
+
