@@ -1,8 +1,15 @@
 // const urlInput = document.querySelector('#url-input')
 // const urlForm = document.querySelector('#url-form')
+
 const express = require('express')
+const { engine } = require('express-handlebars') 
 const app = express()
 const port = 3001
+
+app.engine('.hbs', engine({extname: '.hbs'}))
+app.set('view engine', '.hbs')
+app.set('views', './views')
+app.use(express.static('public'))
 
 function getRandomURL(quantityOfUnit) {
   let component = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
@@ -19,7 +26,8 @@ app.get('/',(req,res) => {
 })
 
 app.get('/URLs', (req, res) => {
-  res.send('It is Homepage.')
+  // res.send('It is Homepage.')
+  res.render('index')
 })
 
 app.get('/URL/:id', (req, res) => {
