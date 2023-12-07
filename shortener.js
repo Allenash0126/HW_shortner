@@ -4,14 +4,32 @@ const express = require('express')
 const app = express()
 const port = 3001
 
+function getRandomURL(quantityOfUnit) {
+  let component = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+  let URL = ''
+  for (i = 0; i < quantityOfUnit; i++) {
+    let character = component[Math.floor(component.length*Math.random())]
+    URL += character
+  }
+  return(URL)
+}
+
 app.get('/',(req,res) => {
-  res.send('express app for shorten-URL')
+    res.redirect('/URLs')
+})
+
+app.get('/URLs', (req, res) => {
+  res.send('It is Homepage.')
+})
+
+app.get('/URL/:id', (req, res) => {
+  const id = req.params.id
+  res.send(`read URL: ${id}`)
 })
 
 app.listen(port,() => {
   console.log(`express server is running on http://localhost:${port}`)
 })
-
 
 // urlForm.addEventListener('submit', function onURLSubmitted(event) {
 //   const urlOriginal = urlInput.value
