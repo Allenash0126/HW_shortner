@@ -2,6 +2,8 @@ const express = require('express')
 const { engine } = require('express-handlebars') 
 const app = express()
 const port = 3001
+let array = []
+const baseURL = 'http://localhost:3001/Allen?originalURL='
 
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
@@ -23,9 +25,21 @@ app.get('/',(req,res) => {
 })
 
 app.get('/URLs', (req, res) => {
+  res.render('index')
   let keywords = req.query.originalURL
   console.log(keywords)
-  res.render('index')
+  array.push(keywords,baseURL+getRandomURL(5))
+  console.log(array)
+  
+})
+
+app.get('/Allen',(req,res) => {
+  let newKeywords = req.query.originalURL
+  console.log(newKeywords)
+  let URL_FindOriginal = array.indexOf(baseURL+newKeywords)-1
+  console.log(URL_FindOriginal)
+  console.log(array[URL_FindOriginal])
+  res.redirect(array[URL_FindOriginal])
 })
 
 app.get('/URL/:id', (req, res) => {
