@@ -3,7 +3,7 @@ const { engine } = require('express-handlebars')
 const app = express()
 const port = 3001
 let array = []
-const baseURL = 'http://localhost:3001/Allen?originalURL='
+let baseURL = 'http://localhost:3001/Allen?originalURL='
 
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
@@ -27,14 +27,27 @@ app.get('/',(req,res) => {
 app.get('/URLs', (req, res) => {
   let keywords = req.query.originalURL
   console.log(keywords)
-  let randomURL = getRandomURL(5)
-  console.log(randomURL)
-  array.push(keywords,baseURL+randomURL)
-  console.log(array)
-  res.render('index',{baseURL,randomURL})
+  // 檢查input是否為空白
+  if (keywords.length > 0) {
+      // 檢查input是否已輸入過相同網址 此為尚未輸入過
+      if (!array.includes(keywords)) {
+        let randomURL = getRandomURL(5)
+        console.log(randomURL)
+        array.push(keywords,baseURL+randomURL)
+        console.log(array)
+        res.render('index',{baseURL,randomURL})
+      }
+      // 輸入相同網址時，產生一樣的縮址
+      else {
+        const id_sameURL = array.indexOf(keywords)+1
+        baseURL = []
+        randomURL = array[id_sameURL]
+        res.render('index',{baseURL,randomURL})
+      }
+    }
 })
 
-app.get('/Allen',(req,res) => {
+app.get('/Allen',(req,res) => {  
   let newKeywords = req.query.originalURL
   console.log(newKeywords)
   let URL_FindOriginal = array.indexOf(baseURL+newKeywords)-1
