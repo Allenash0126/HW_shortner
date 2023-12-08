@@ -25,12 +25,13 @@ app.get('/',(req,res) => {
 })
 
 app.get('/URLs', (req, res) => {
-  res.render('index')
   let keywords = req.query.originalURL
   console.log(keywords)
-  array.push(keywords,baseURL+getRandomURL(5))
+  let randomURL = getRandomURL(5)
+  console.log(randomURL)
+  array.push(keywords,baseURL+randomURL)
   console.log(array)
-  
+  res.render('index',{baseURL,randomURL})
 })
 
 app.get('/Allen',(req,res) => {
@@ -42,6 +43,17 @@ app.get('/Allen',(req,res) => {
   res.redirect(array[URL_FindOriginal])
 })
 
+// let obj = {table: []};
+// obj.table.push({id: 123, square:2342})
+// let json = JSON.stringify(obj);
+// let fs = require('fs');
+//     fs.writeFile("storage.json", json, 'utf8', function (err) {
+//     if (err) {
+//         console.log("URL failed to save.");
+//         return console.log(err);
+//     }
+//     console.log("URL was successfully saved!");
+// });
 app.get('/URL/:id', (req, res) => {
   const id = req.params.id
   res.send(`read URL: ${id}`)
