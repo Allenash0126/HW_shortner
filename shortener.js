@@ -1,9 +1,9 @@
 const express = require('express')
 const { engine } = require('express-handlebars') 
 const app = express()
-const port = 3001
+const port = 3000
 let array = []
-let baseURL = 'http://localhost:3001/Allen?originalURL='
+let baseURL = 'http://localhost:3000/id?url='
 
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
@@ -21,11 +21,12 @@ function getRandomURL(quantityOfUnit) {
 }
 
 app.get('/',(req,res) => {
-    res.redirect('/URLs')
+    res.render('index')
 })
 
 app.get('/URLs', (req, res) => {
-  let keywords = req.query.originalURL
+  // res.render('index')
+  let keywords = req.query.url
   console.log(keywords)
   // 檢查input是否為空白
   if (keywords.length > 0) {
@@ -35,41 +36,25 @@ app.get('/URLs', (req, res) => {
         console.log(randomURL)
         array.push(keywords,baseURL+randomURL)
         console.log(array)
-        res.render('index',{baseURL,randomURL})
+        res.render('index2',{baseURL,randomURL})
       }
       // 輸入相同網址時，產生一樣的縮址
       else {
         const id_sameURL = array.indexOf(keywords)+1
         baseURL = []
         randomURL = array[id_sameURL]
-        res.render('index',{baseURL,randomURL})
+        res.render('index2',{baseURL,randomURL})
       }
     }
 })
 
-app.get('/Allen',(req,res) => {  
-  let newKeywords = req.query.originalURL
+app.get('/id',(req,res) => {  
+  let newKeywords = req.query.url
   console.log(newKeywords)
   let URL_FindOriginal = array.indexOf(baseURL+newKeywords)-1
   console.log(URL_FindOriginal)
   console.log(array[URL_FindOriginal])
   res.redirect(array[URL_FindOriginal])
-})
-
-// let obj = {table: []};
-// obj.table.push({id: 123, square:2342})
-// let json = JSON.stringify(obj);
-// let fs = require('fs');
-//     fs.writeFile("storage.json", json, 'utf8', function (err) {
-//     if (err) {
-//         console.log("URL failed to save.");
-//         return console.log(err);
-//     }
-//     console.log("URL was successfully saved!");
-// });
-app.get('/URL/:id', (req, res) => {
-  const id = req.params.id
-  res.send(`read URL: ${id}`)
 })
 
 app.listen(port,() => {
