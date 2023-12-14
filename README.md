@@ -7,19 +7,19 @@ A simple web application for shortening your URL
 - redirect to original URL by pasting the shortened URL
 
 ### Getting started
-- clone the repository
+- clone the repository：
 git clone https://github.com/Allenash0126/HW_shortner.git
 
-- get into the path
+- get into the path：
 cd HW_shortner
 
-- install npm
+- install npm：
 npm install
 
-- start the project 
+- start the project： 
 npm run dev
 
-- open your browser
+- open your browser：
 enter http://localhost:3000
 you will see: express server is running on http://localhost:3000
 
